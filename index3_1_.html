@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Moment ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: #000;
+        }
+
+        /* Stars Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Floating Hearts */
+        .floating-hearts {
+            position: fixed;
+            bottom: -50px;
+            animation: floatUp 4s infinite;
+            pointer-events: none;
+            font-size: 2em;
+            opacity: 0.7;
+            z-index: 3;
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -50px;
+                opacity: 0.7;
+            }
+            100% {
+                bottom: 110vh;
+                opacity: 0;
+            }
+        }
+
+        .scene {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 2;
+        }
+
+        .scene.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Scene 1: Welcome */
+        #scene1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-direction: column;
+        }
+
+        .welcome-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            text-align: center;
+            animation: fadeInScale 1.5s ease;
+        }
+
+        .welcome-text {
+            font-size: 3em;
+            color: #764ba2;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .heart {
+            font-size: 4em;
+            color: #ff6b6b;
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Scene 2: Memory Lane - First Moments */
+        #scene2 {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .memory-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .memory-title {
+            font-size: 2em;
+            color: #764ba2;
+            margin-bottom: 30px;
+        }
+
+        .memory-item {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .memory-item h3 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .memory-item p {
+            color: #1a1a1a;
+            font-size: 1.1em;
+            line-height: 1.6;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        /* Scene 3: Polaroid Memory */
+        #scene3 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .polaroid {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform: rotate(-2deg);
+            animation: slideInRotate 1s ease;
+            margin-bottom: 30px;
+        }
+
+        @keyframes slideInRotate {
+            from {
+                transform: translateX(-100%) rotate(-10deg);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) rotate(-2deg);
+                opacity: 1;
+            }
+        }
+
+        .polaroid-img {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .memory-text {
+            font-size: 1.3em;
+            color: #000000;
+            margin-top: 20px;
+            line-height: 1.6;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        /* Scene 4: Interactive Heart */
+        #scene4 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .heart-container {
+            text-align: center;
+        }
+
+        .instruction {
+            font-size: 1.5em;
+            color: white;
+            margin-bottom: 40px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        #interactiveHeart {
+            font-size: 120px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            user-select: none;
+        }
+
+        #interactiveHeart:hover {
+            transform: scale(1.2);
+        }
+
+        .heart-counter {
+            font-size: 2em;
+            color: white;
+            margin-top: 30px;
+        }
+
+        /* Scene 5: Maze Game */
+        #scene5 {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .maze-container {
+            text-align: center;
+        }
+
+        .maze-title {
+            font-size: 2em;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        #maze {
+            display: grid;
+            grid-template-columns: repeat(7, 60px);
+            gap: 5px;
+            margin: 0 auto 30px;
+        }
+
+        .maze-cell {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .maze-cell:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.1);
+        }
+
+        .maze-cell.wall {
+            background: rgba(0,0,0,0.5);
+            cursor: not-allowed;
+        }
+
+        .maze-cell.player {
+            background: #ff6b6b;
+            animation: bounce 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Scene 6: Reasons Why */
+        #scene6 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            overflow-y: auto;
+        }
+
+        .reasons-container {
+            max-width: 900px;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .reasons-title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 50px;
+        }
+
+        .reason-card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .reason-card:nth-child(2) { animation-delay: 0.2s; }
+        .reason-card:nth-child(3) { animation-delay: 0.4s; }
+        .reason-card:nth-child(4) { animation-delay: 0.6s; }
+        .reason-card:nth-child(5) { animation-delay: 0.8s; }
+        .reason-card:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reason-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        /* Scene 7: The Question */
+        #scene7 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .question-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .question-title {
+            font-size: 2.5em;
+            color: #764ba2;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.5em;
+            color: #333;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .ring {
+            font-size: 100px;
+            animation: rotate 3s linear infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .answer-btns {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        /* Scene 8: Celebration */
+        #scene8 {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .celebration-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .celebration-text {
+            font-size: 3em;
+            color: #764ba2;
+            margin-bottom: 30px;
+            animation: celebrationPulse 1s infinite;
+        }
+
+        @keyframes celebrationPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .final-message {
+            font-size: 1.4em;
+            color: #764ba2;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        .countdown {
+            font-size: 1.1em;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .hearts-rain {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .falling-heart {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 4s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                opacity: 1;
+            }
+            100% {
+                top: 110%;
+                opacity: 0.5;
+            }
+        }
+
+        .next-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hint-text {
+            font-size: 0.9em;
+            color: #999;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        <source src="music.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Control Button -->
+    <button id="musicToggle" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: rgba(255, 255, 255, 0.9); border: none; padding: 15px 20px; border-radius: 50px; cursor: pointer; font-size: 1.2em; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: all 0.3s;">
+        🔊
+    </button>
+
+    <div class="stars" id="stars"></div>
+    <canvas id="fireworks"></canvas>
+
+    <!-- Scene 1: Welcome -->
+    <div id="scene1" class="scene active">
+        <div class="welcome-box">
+            <div class="heart">💖</div>
+            <h1 class="welcome-text">Hello Beautiful!</h1>
+            <p class="subtitle">Hôm nay anh có một điều rất đặc biệt muốn chia sẻ với em. Một điều mà anh đã suy nghĩ và ấp ủ trong lòng bấy lâu nay...</p>
+            <p class="subtitle">Em đã sẵn sàng cùng anh bắt đầu một cuộc hành trình nhỏ chưa??</p>
+            <button class="start-btn" onclick="nextScene(2)">Sẵn sàng ❤️</button>
+        </div>
+    </div>
+
+    <!-- Scene 2: Memory Lane - Beautiful Journey -->
+    <div id="scene2" class="scene">
+        <div class="memory-box">
+            <h2 class="memory-title">Hành trình tươi đẹp của chúng ta</h2>
+            <p class="subtitle">Trước khi hỏi em một điều quan trọng, hãy để anh nhắc lại cho em nhớ về những khoảnh khắc quý giá mà chúng ta đã cùng nhau trải qua....</p>
+            
+            <div class="memory-item">
+                <h3>✨Lần đầu tiên</h3>
+                <p>Ngay từ lần đầu tiên nhìn thấy em, anh đã biết em có điều gì đó kỳ diệu. Nụ cười của em thắp sáng cả căn phòng và trái tim anh vẫn không ngừng đập loạn nhịp kể từ đó..</p>
+            </div>
+            <div class="memory-item">
+                <h3>🌟 Mỗi nụ cười và nước mắt mà chúng ta đã cùng nhau chia sẻ</h3>
+                <p>Tiếng cười của em là âm thanh yêu thích nhất của anh trên thế giới này. Mỗi câu chuyện cười, mỗi khoảnh khắc ngớ ngẩn - đó đều là những kho báu của anh..</p>
+            </div>
+            
+            <button class="next-btn" onclick="nextScene(3)">Continue... 💕</button>
+        </div>
+    </div>
+
+    <!-- Scene 3: Polaroid Memory -->
+    <div id="scene3" class="scene">
+        <div class="memory-box">
+            <div class="polaroid">
+                <div class="polaroid-img">👑</div>
+                <p style="font-size: 1.2em; color: #333; margin-top: 10px;">Hành trình của chúng ta</p>
+            </div>
+            <div class="memory-text">
+                Mọi khoảnh khắc bên cạnh em đều thật kỳ diệu...<br>
+                Từ lời chào đầu tiên cho đến mỗi nụ cười mà chúng ta đã cùng chia sẻ,<br>
+                em đã làm cho cuộc sống của anh trở nên phi thường. ❤️
+            </div>
+            <button class="next-btn" onclick="nextScene(4)">Continue</button>
+        </div>
+    </div>
+
+    <!-- Scene 4: Interactive Heart -->
+    <div id="scene4" class="scene">
+        <div class="heart-container">
+            <div class="instruction">Hãy nhấp vào biểu tượng trái tim 10 lần để mở khóa chương tiếp theo! 💕</div>
+            <div id="interactiveHeart" onclick="heartClick()">❤️</div>
+            <div class="heart-counter">Clicks: <span id="heartCount">0</span> / 10</div>
+        </div>
+    </div>
+
+    <!-- Scene 5: Maze Game -->
+    <div id="scene5" class="scene">
+        <div class="maze-container">
+            <div class="maze-title">Hãy cùng chúng ta vượt qua hành trình đến đích! 🎯</div>
+            <div id="maze"></div>
+            <div style="color: white; font-size: 1.2em;">Nhấp vào các ô để di chuyển!</div>
+        </div>
+    </div>
+
+    <!-- Scene 6: Reasons Why -->
+    <div id="scene6" class="scene">
+        <div class="reasons-container">
+            <h2 class="reasons-title">Những lý do khiến anh thương em</h2>
+            <div class="reason-card">
+                <h3>💫 Nụ cười của em</h3>
+                <p>Nụ cười của em thắp sáng cả thế giới của anh và làm cho mỗi ngày trở nên tươi sáng hơn.</p>
+            </div>
+            <div class="reason-card">
+                <h3>🌟 Lòng tốt của em</h3>
+                <p>Cách em quan tâm đến người khác và thể hiện lòng trắc ẩn truyền cảm hứng cho anh mỗi ngày.</p>
+            </div>
+            <div class="reason-card">
+                <h3>💖 Trái tim của em</h3>
+                <p>Em yêu thương sâu sắc và chân thành, và anh thật may mắn khi được em yêu thương.</p>
+            </div>
+            <button class="next-btn" onclick="nextScene(7)">Thêm một điều nữa...</button>
+        </div>
+    </div>
+
+    <!-- Scene 7: The Question -->
+    <div id="scene7" class="scene">
+        <div class="question-box">
+            <h1 class="question-title">Vậy vấn đề là đây......</h1>
+            <div class="ring">💍</div>
+            <p style="font-size: 1.4em; font-weight: bold; color: #333;">Mọi khoảnh khắc bên em đều thật tuyệt vời, và anh không thể tưởng tượng cuộc sống của mình sẽ ra sao nếu thiếu em.</p>
+            <p class="question-text" style="color: #764ba2;">Nhận lời cầu hôn của anh nha?</p>
+            <div class="answer-btns">
+                <button class="yes-btn" onclick="celebrate()">CÓ! 💕</button>
+                <button class="no-btn" id="noBtn" onmouseover="moveNoButton()">Không</button>
+            </div>
+            <p class="hint-text">(Gợi ý nè: Nút "Không" khó bấm lắm. 😉)</p>
+        </div>
+    </div>
+
+    <!-- Scene 8: Celebration -->
+    <div id="scene8" class="scene">
+        <div class="celebration-container">
+            <div class="heart">💗💗💗</div>
+            <div class="celebration-text">
+                🎉 She Said Yes! 🎉
+            </div>
+            <h2 style="color: #667eea; margin-bottom: 20px;">You've Made Me The Happiest Person Alive!</h2>
+            <p style="font-size: 1.3em; color: #333; line-height: 1.8;">I promise to make you smile every day, support your dreams, and be there through everything. This is just the beginning of our amazing story together!</p>
+            <div class="final-message">
+                "In you, I've found the love of my life and my closest, truest friend."
+            </div>
+            <div class="countdown" id="countdown"></div>
+            <p style="margin-top: 30px; font-size: 1.1em; color: #333;">Here's to us and our beautiful future! 🥂✨</p>
+            <div style="font-size: 5em; margin-top: 30px;">👑</div>
+        </div>
+        <div class="hearts-rain" id="heartsRain"></div>
+    </div>
+
+    <script>
+        let currentScene = 1;
+        let heartClicks = 0;
+        let playerPos = { x: 0, y: 0 };
+        
+        const mazeLayout = [
+            [1, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 1, 1, 1],
+            [0, 0, 1, 0, 1, 0, 1],
+            [0, 1, 1, 1, 1, 0, 1],
+            [0, 0, 0, 0, 0, 0, 2]
+        ];
+
+        // Create stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Create floating hearts
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.className = 'floating-hearts';
+            heart.innerHTML = ['❤️', '💕', '💖', '💗', '💓'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }, 500);
+
+        function nextScene(sceneNum) {
+            document.getElementById('scene' + currentScene).classList.remove('active');
+            setTimeout(() => {
+                currentScene = sceneNum;
+                document.getElementById('scene' + sceneNum).classList.add('active');
+                if (sceneNum === 5) initMaze();
+            }, 300);
+        }
+
+        function heartClick() {
+            heartClicks++;
+            document.getElementById('heartCount').textContent = heartClicks;
+            
+            const heart = document.getElementById('interactiveHeart');
+            heart.style.transform = 'scale(1.3)';
+            setTimeout(() => heart.style.transform = 'scale(1)', 200);
+            
+            if (heartClicks >= 10) {
+                setTimeout(() => nextScene(5), 800);
+            }
+        }
+
+        function initMaze() {
+            const maze = document.getElementById('maze');
+            maze.innerHTML = '';
+            
+            for (let y = 0; y < 5; y++) {
+                for (let x = 0; x < 7; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'maze-cell';
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+                    
+                    if (mazeLayout[y][x] === 0) {
+                        cell.classList.add('wall');
+                        cell.textContent = '🧱';
+                    } else if (mazeLayout[y][x] === 2) {
+                        cell.textContent = '🎯';
+                    }
+                    
+                    if (x === 0 && y === 0) {
+                        cell.classList.add('player');
+                        cell.textContent = '😊';
+                    }
+                    
+                    cell.onclick = () => movePlayer(x, y);
+                    maze.appendChild(cell);
+                }
+            }
+        }
+
+        function movePlayer(x, y) {
+            if (mazeLayout[y][x] === 0) return;
+            
+            const distance = Math.abs(x - playerPos.x) + Math.abs(y - playerPos.y);
+            if (distance !== 1) return;
+            
+            const cells = document.querySelectorAll('.maze-cell');
+            cells.forEach(cell => {
+                if (cell.dataset.x == playerPos.x && cell.dataset.y == playerPos.y) {
+                    cell.classList.remove('player');
+                    cell.textContent = mazeLayout[playerPos.y][playerPos.x] === 2 ? '🎯' : '';
+                }
+            });
+            
+            playerPos = { x, y };
+            
+            cells.forEach(cell => {
+                if (cell.dataset.x == x && cell.dataset.y == y) {
+                    cell.classList.add('player');
+                    cell.textContent = '😊';
+                }
+            });
+            
+            if (mazeLayout[y][x] === 2) {
+                setTimeout(() => nextScene(6), 1000);
+            }
+        }
+
+        function moveNoButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 100);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function celebrate() {
+            nextScene(8);
+            createHeartsRain();
+            startFireworks();
+            startCountdown();
+        }
+
+        function createHeartsRain() {
+            const container = document.getElementById('heartsRain');
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'falling-heart';
+                    heart.textContent = ['❤️', '💕', '💖', '💗', '💓'][Math.floor(Math.random() * 5)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    container.appendChild(heart);
+                }, i * 100);
+            }
+        }
+
+        function startFireworks() {
+            const canvas = document.getElementById('fireworks');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            
+            function Particle(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 8;
+                this.vy = (Math.random() - 0.5) * 8;
+                this.life = 100;
+                this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            }
+            
+            Particle.prototype.update = function() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.1;
+                this.life--;
+            };
+            
+            Particle.prototype.draw = function() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.life / 100;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            };
+            
+            function animate() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                if (Math.random() < 0.05) {
+                    const x = Math.random() * canvas.width;
+                    const y = Math.random() * canvas.height / 2;
+                    for (let i = 0; i < 50; i++) {
+                        particles.push(new Particle(x, y));
+                    }
+                }
+                
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].life <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+
+        function startCountdown() {
+            const startDate = new Date();
+            setInterval(() => {
+                const now = new Date();
+                const diff = now - startDate;
+                const seconds = Math.floor(diff / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const hours = Math.floor(minutes / 60);
+                const days = Math.floor(hours / 24);
+
+                document.getElementById('countdown').innerHTML = 
+                    `We've been together for: ${days} days, ${hours % 24} hours, ${minutes % 60} minutes, ${seconds % 60} seconds ❤️`;
+            }, 1000);
+        }
+
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('fireworks');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Background Music Control
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let isMusicPlaying = false;
+
+        // Try to play music when user interacts with the page
+        function playMusic() {
+            if (!isMusicPlaying) {
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicToggle.textContent = '🔊';
+                }).catch(err => {
+                    console.log('Music autoplay prevented:', err);
+                });
+            }
+        }
+
+        // Add click event to start button to also start music
+        document.addEventListener('DOMContentLoaded', () => {
+            const startBtn = document.querySelector('.start-btn');
+            if (startBtn) {
+                startBtn.addEventListener('click', playMusic);
+            }
+        });
+
+        // Music toggle button
+        musicToggle.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🔇';
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicToggle.textContent = '🔊';
+                    isMusicPlaying = true;
+                }).catch(err => {
+                    alert('Please click the start button first to enable music.');
+                });
+            }
+        });
+
+        // Set volume (0.0 to 1.0)
+        bgMusic.volume = 0.5;
+    </script>
+</body>
+</html>
